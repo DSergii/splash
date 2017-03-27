@@ -16,7 +16,7 @@ var SplashApp = {
 			},
 
 			messages: {
-	            email: "Please enter a valid email address"
+	            email: "Indirizzo Email Errato!"
 	        }
 
 		};
@@ -26,19 +26,22 @@ var SplashApp = {
 
 	formSubmit: function() {
 		var _this = this,
-			submitBtn = _this.form.find('button');
+			submitBtn = _this.form.find('button'),
+			form = _this.form,
+			successText = 'Registrazione Avvenuta!';
 
 		submitBtn.click(function() {
 
-			if(_this.form.valid()){
+			if(form.valid()){
 
 				$.ajax({
 					type: "POST",
 					url: 'newsletter.php',
-					data: _this.form.serialize(),
+					data: form.serialize(),
 					success: function(data){
-					  	console.log( data );
 					  	_this.clearForm();
+					  	form.addClass('success');
+					  	form.find('input').attr("placeholder", successText);
 					}
 				});
 			}
